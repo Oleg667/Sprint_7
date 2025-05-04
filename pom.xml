@@ -5,17 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>7__7</artifactId>
+    <artifactId>Sprint_7</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+
+        <!-- Версия AspectJ для работы с AOP (нужен для Allure) -->
+        <aspectj.version>1.9.7</aspectj.version>
+        <!-- Версия фреймворка Allure для отчётов -->
+        <allure.version>2.15.0</allure.version>
+
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <!-- Добавленные свойства для Allure -->
-        <aspectj.version>1.9.7</aspectj.version>
-        <allure.version>2.15.0</allure.version>
     </properties>
 
     <dependencies>
@@ -54,36 +56,46 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.13.0</version>
         </dependency>
-        <!-- Добавленные зависимости для Allure -->
+
         <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit4</artifactId>
-            <version>${allure.version}</version>
-            <scope>test</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.14</version>
         </dependency>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-rest-assured</artifactId>
-            <version>${allure.version}</version>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- Интеграция Allure с JUnit 4 (для генерации отчётов) -->
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-junit4</artifactId>
+                <version>${allure.version}</version>
+            </dependency>
+
+            <!-- Интеграция Allure с RestAssured (логирование HTTP-запросов в отчётах) -->
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-rest-assured</artifactId>
+                <version>${allure.version}</version>
+            </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Компилятор Java -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
             </plugin>
-            <!-- Обновленный maven-surefire-plugin для Allure -->
+
+            <!-- Плагин для запуска тестов + интеграция Allure -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
                     <testFailureIgnore>false</testFailureIgnore>
+                    <!-- Добавляем поддержку Allure -->
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
@@ -100,6 +112,7 @@
                         </property>
                     </systemProperties>
                 </configuration>
+                <!-- Добавляем зависимость AspectJ -->
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
@@ -109,7 +122,7 @@
                 </dependencies>
             </plugin>
 
-            <!-- Плагин для генерации Allure отчетов -->
+            <!-- Плагин для генерации отчётов Allure (добавляем новый) -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
@@ -120,4 +133,7 @@
             </plugin>
         </plugins>
     </build>
+
+
+
 </project>
