@@ -5,8 +5,13 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 import io.restassured.config.SSLConfig;
 import io.restassured.config.HttpClientConfig;
+import io.restassured.http.ContentType;
 import config.Config;
 import org.junit.Assert;
+import java.util.HashMap;
+import java.util.Map;
+
+
 
 public class CourierSteps {
 
@@ -46,7 +51,14 @@ public class CourierSteps {
                 //.post("/api/v1/courier");
                 .post(Config.COURIER_API);
     }
-
+    @Step("создание курьера с неполными данными {jsonRequestBody}")
+    // Метод для тестирования неполных данных при создании курьера
+    public static Response createCourierPartial(String jsonRequestBody) {
+        return given()
+                .contentType(ContentType.JSON)
+                .body(jsonRequestBody)
+                .post(Config.COURIER_API);
+    }
     // Метод получения ID курьера
     @Step("Получение ID курьера по логину: {login}")
     public static String getCourierId(String login, String password) {
@@ -80,7 +92,7 @@ public class CourierSteps {
         System.out.println("Курьер с ID " + courierId + " успешно удалён");
     }
 
-    // Метод проверки успешного создания курьера (201 статус)
+    // Метод проверки успешного создания курьера (201 статус).... перенес в тест проверку. ПОТОМ УДАЛИТЬ!!!!
     @Step("Проверка успешного создания курьера (код 201)")
     public static void verifyCreation(int statusCode, String responseBody) {
         System.out.println("Код ответа: " + statusCode);
