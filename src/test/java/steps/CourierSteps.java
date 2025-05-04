@@ -1,5 +1,5 @@
 package steps;
-//import io.qameta.allure.Step;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
@@ -21,7 +21,7 @@ public class CourierSteps {
     }
 
     // Метод генерации уникального логина
-    //@Step("Генерация уникального логина для курьера")
+    @Step("Генерация уникального логина для курьера")
     public static String generateUniqueLogin() {
         String login = config.Config.DEFAULT_COURIER_LOGIN_PREFIX + System.currentTimeMillis();
         System.out.println("Сгенерирован уникальный логин: " + login);
@@ -29,7 +29,7 @@ public class CourierSteps {
     }
 
     // Метод создания курьера
-    //@Step("Создание курьера (логин: {login})")
+    @Step("Создание курьера (логин: {login})")
     public static Response createCourier(String login, String password, String firstName) {
         String requestBody = String.format(
                 "{ \"login\": \"%s\", \"password\": \"%s\", \"firstName\": \"%s\" }",
@@ -48,7 +48,7 @@ public class CourierSteps {
     }
 
     // Метод получения ID курьера
-    //@Step("Получение ID курьера по логину: {login}")
+    @Step("Получение ID курьера по логину: {login}")
     public static String getCourierId(String login, String password) {
         String requestBody = String.format(
                 "{ \"login\": \"%s\", \"password\": \"%s\" }",
@@ -66,7 +66,7 @@ public class CourierSteps {
     }
 
     // Метод удаления курьера
-    //@Step("Удаление курьера (ID: {courierId})")
+    @Step("Удаление курьера (ID: {courierId})")
     public static void deleteCourier(String courierId) {
         System.out.println("Удаление курьера с ID: " + courierId);
 
@@ -81,6 +81,7 @@ public class CourierSteps {
     }
 
     // Метод проверки успешного создания курьера (201 статус)
+    @Step("Проверка успешного создания курьера (код 201)")
     public static void verifyCreation(int statusCode, String responseBody) {
         System.out.println("Код ответа: " + statusCode);
         System.out.println("Тело ответа: " + responseBody);
@@ -92,6 +93,7 @@ public class CourierSteps {
     }
 
     // Метод очистки тестовых данных курьера
+    @Step("Очистка тестовых данных, удаление курьера проверка  удаления")
     public static void cleanUp(String login, String password) {
         try {
             String courierId = getCourierId(login, password);

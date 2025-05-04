@@ -3,26 +3,19 @@ import io.restassured.response.Response;
 import org.junit.Assert;  // Для JUnit 4
 import org.junit.Test;// импортируем Test
 import static steps.CourierSteps.*;  // или import steps.CounterSteps;
-import static config.Config.*;
-//import io.qameta.allure.restassured.AllureRestAssured;
-//import io.qameta.allure.Description;
-//import io.qameta.allure.Step;
-//import io.qameta.allure.junit4.AllureJunit4;
+import io.qameta.allure.restassured.AllureRestAssured;
 import org.junit.runner.RunWith;
 import io.restassured.RestAssured;// импортируем RestAssured
 import org.junit.Before;// импортируем Before
+import io.qameta.allure.junit4.DisplayName; // импорт DisplayName
+import io.qameta.allure.Description; // импорт Description
+
 
 public class CreateCourierTest {
-// Подключение Allure логирования к каждому запросу
-// @Before
-//    public void setUp() {
-//        // Включаем логирование в Allure
-//        RestAssured.filters(new AllureRestAssured());
-//    }
-    // Основной тестовый метод
- @Test
-    // Задаем читаемое имя теста в отчете
- //@Description("Создание и удаление тестового курьера")
+
+ @Test // Основной тестовый метод
+ @DisplayName("Создание тестового курьера")
+ @Description("Тест проверяет корректность API при создании нового курьера. Ожидаемый результат:** HTTP 201 и JSON с ID курьера.")
     public void Creating_Courier_New() {
 
         String login = generateUniqueLogin(); // Генерация уникального логина для каждого теста

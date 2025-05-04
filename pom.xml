@@ -81,14 +81,7 @@
 
     <build>
         <plugins>
-            <!-- Компилятор Java -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-            </plugin>
-
-            <!-- Плагин для запуска тестов + интеграция Allure -->
+           <!-- Плагин для запуска тестов + интеграция Allure -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
