@@ -59,8 +59,31 @@ public class CourierSteps {
                 .body(jsonRequestBody)
                 .post(Config.COURIER_API);
     }
-    // Метод получения ID курьера
-    @Step("Получение ID курьера по логину: {login}")
+    // Метод авторизации курьера, возвращающий полный Response
+    @Step("Авторизация курьера по логину: {login}")
+    public static Response courierLogged(String login, String password) {
+        String requestBody = String.format(
+                "{ \"login\": \"%s\", \"password\": \"%s\" }",
+                login, password
+        );
+
+        return given()
+                .header("Content-type", "application/json")
+                .body(requestBody)
+                .when()
+                .post(Config.COURIER_LOGIN_API);
+    }
+    @Step("авторизация курьера с неполными данными {jsonRequestBody}")
+    // Метод для тестирования неполных данных при авторизации курьера
+    public static Response courierLoggedPartial(String jsonRequestBody) {
+        return given()
+                .contentType(ContentType.JSON)
+                .body(jsonRequestBody)
+                .post(Config.COURIER_LOGIN_API);
+    }
+
+    // Метод получения ID курьера через авторизацию
+    @Step("Получение ID курьера по логину: {login} и паролю")
     public static String getCourierId(String login, String password) {
         String requestBody = String.format(
                 "{ \"login\": \"%s\", \"password\": \"%s\" }",
@@ -92,17 +115,17 @@ public class CourierSteps {
         System.out.println("Курьер с ID " + courierId + " успешно удалён");
     }
 
-    // Метод проверки успешного создания курьера (201 статус).... перенес в тест проверку. ПОТОМ УДАЛИТЬ!!!!
-    @Step("Проверка успешного создания курьера (код 201)")
-    public static void verifyCreation(int statusCode, String responseBody) {
-        System.out.println("Код ответа: " + statusCode);
-        System.out.println("Тело ответа: " + responseBody);
-
-        if (statusCode != Config.STATUS_CODE_CREATED) {
-            Assert.fail("Ошибка создания курьера. Код: " + statusCode + ", Ответ: " + responseBody);
-        }
-        System.out.println("Курьер успешно создан.");
-    }
+//    // Метод проверки успешного создания курьера (201 статус).... перенес в тест проверку. ПОТОМ УДАЛИТЬ!!!!
+//    @Step("Проверка успешного создания курьера (код 201)")
+//    public static void verifyCreation(int statusCode, String responseBody) {
+//        System.out.println("Код ответа: " + statusCode);
+//        System.out.println("Тело ответа: " + responseBody);
+//
+//        if (statusCode != Config.STATUS_CODE_CREATED) {
+//            Assert.fail("Ошибка создания курьера. Код: " + statusCode + ", Ответ: " + responseBody);
+//        }
+//        System.out.println("Курьер успешно создан.");
+//    }
 
     // Метод очистки тестовых данных курьера
     @Step("Очистка тестовых данных, удаление курьера проверка  удаления")
