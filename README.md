@@ -25,12 +25,6 @@ mvn allure:report
 
 ├───src
 
-   ├───main
-
-   │   ├───java
-
-   │   └───resources
-
    └───test
 
        └───java
