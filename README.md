@@ -23,26 +23,50 @@ mvn clean test
 mvn allure:report
 Структура проекта
 ├───src
+
 │   ├───main
+
 │   │   ├───java
+
 │   │   └───resources
+
 │   └───test
+
 │       └───java
+
 │           │   CourierLoggedTest.java
+
 │           │   CreateCourierTest.java
+
 │           │   CreatingAnOrderTest.java
+
 │           │   ListOfOrdersTest.java
+
 │           │   
+
 │           ├───config
+
 │           │       Config.java
+
 │           │       
+
 │           ├───factory
+
 │           │       OrderFactory.java
+
 │           │       
+
 │           ├───model
+
 │           │       OrderRequest.java
+
 │           │       OrderResponse.java
+
 │           │       
+
 │           └───steps
+
 │                   CourierSteps.java
+
 │                   OrderSteps.java
+
