@@ -22,51 +22,52 @@ mvn clean test
 Для создания отчета в Allure ввести команду
 mvn allure:report
 Структура проекта
+
 ├───src
 
-│   ├───main
+   ├───main
 
-│   │   ├───java
+   │   ├───java
 
-│   │   └───resources
+   │   └───resources
 
-│   └───test
+   └───test
 
-│       └───java
+       └───java
 
-│           │   CourierLoggedTest.java
+           │   CourierLoggedTest.java
 
-│           │   CreateCourierTest.java
+           │   CreateCourierTest.java
 
-│           │   CreatingAnOrderTest.java
+           │   CreatingAnOrderTest.java
 
-│           │   ListOfOrdersTest.java
+           │   ListOfOrdersTest.java
 
-│           │   
+           │   
 
-│           ├───config
+           ├───config
 
-│           │       Config.java
+           │       Config.java
 
-│           │       
+           │       
 
-│           ├───factory
+           ├───factory
 
-│           │       OrderFactory.java
+           │       OrderFactory.java
 
-│           │       
+           │       
 
-│           ├───model
+           ├───model
 
-│           │       OrderRequest.java
+           │       OrderRequest.java
 
-│           │       OrderResponse.java
+           │       OrderResponse.java
 
-│           │       
+           │       
 
-│           └───steps
+           └───steps
 
-│                   CourierSteps.java
+                   CourierSteps.java
 
-│                   OrderSteps.java
+                   OrderSteps.java
 
