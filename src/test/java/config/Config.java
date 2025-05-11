@@ -7,6 +7,8 @@ public class Config {
     public static final String COURIER_LOGIN_API = "/api/v1/courier/login";
     public static final String COURIER_DEL_API = "/api/v1/courier/";
     public static final String CREATING_AN_ORDER_API = "/api/v1/orders";
+    public static final String LIST_OF_ORDER_API = "/api/v1/orders";
+
 
 
     // Тестовые данные
@@ -20,4 +22,9 @@ public class Config {
     public static final int STATUS_CODE_CONFLICT = 409;
     public static final int STATUS_CODE_CLIENT_ERROR = 400;
     public static final int STATUS_CODE_NOT_FOUND = 404;
+
+    // Таймауты
+    public static final int CONNECTION_TIMEOUT_MS = 5000;
+    public static final int SOCKET_TIMEOUT_MS = 5000;
+
 }

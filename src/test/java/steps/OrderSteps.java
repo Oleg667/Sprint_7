@@ -6,9 +6,9 @@ import static io.restassured.RestAssured.given;
 import io.restassured.config.SSLConfig;
 import io.restassured.config.HttpClientConfig;
 import config.Config;
-import java.util.HashMap;
-import java.util.Map;
-import com.google.gson.Gson;
+import model.OrderRequest;
+import io.restassured.specification.RequestSpecification;
+import java.util.List;
 
 
 public class OrderSteps {
@@ -18,38 +18,59 @@ public class OrderSteps {
         RestAssured.config = RestAssured.config()
                 .sslConfig(new SSLConfig().relaxedHTTPSValidation())
                 .httpClient(HttpClientConfig.httpClientConfig() //Получить конфигурацию для HttpClient
-                        .setParam("http.connection.timeout", 5000) //сколько максимум ждать подключения к серверу
-                        .setParam("http.socket.timeout", 5000) //сколько ждать ответа после подключения
+                        .setParam("http.connection.timeout", Config.CONNECTION_TIMEOUT_MS) //сколько максимум ждать подключения к серверу
+                        .setParam("http.socket.timeout", Config.SOCKET_TIMEOUT_MS) //сколько ждать ответа после подключения
                 );
-    }
-    // Метод для получения стандартных данных заказа
-    public static Map<String, Object> getBaseOrderData() {
-        Map<String, Object> order = new HashMap<>();
-        order.put("firstName", "Имя_заказчика");
-        order.put("lastName", "Uchiha");
-        order.put("address", "Konoha, 142 apt.");
-        order.put("metroStation", 4);
-        order.put("phone", "+7 800 355 35 35");
-        order.put("rentTime", 5);
-        order.put("deliveryDate", "2020-06-06");
-        order.put("comment", "Saske, come back to Konoha");
-        order.put("color", new String[]{}); // по умолчанию пустой массив
-        return order;
     }
 
     // Метод создания нового заказа
     @Step("Создание заказа ")
-    public static Response createOrderNew(Map<String, Object> orderData) {
-        // Преобразуем Map в JSON строку с помощью Gson
-        String requestBody = new Gson().toJson(orderData);
+    public static Response createOrderNew(OrderRequest orderData) {
 
         System.out.println("Отправка запроса на создание Заказа");
 
         return given()
                 .header("Content-type", "application/json")
-                .body(requestBody)
+                .body(orderData)
                 .when()
-                .log().body()  // Логирование тела запроса, вывод в консоль во время теста
+                //.log().body()  // Логирование тела запроса, вывод в консоль во время теста
                 .post(Config.CREATING_AN_ORDER_API);
     }
+
+    // Метод шага для Allure, чтобы записать цвет самоката в отчет
+    @Step("Создание заказа с цветом самоката: {color}")
+    public static void logOrderCreationWithColor(List<String> color) {
+        System.out.println("Создаем заказ с цветом: " + color);
+    }
+
+
+    // Метод получения списка заказов с разными параметрами
+    @Step("Получение списка заказа  ")
+    public static Response listOfOrder(Integer courierId, String nearestStation, Integer limit, Integer page) {
+
+        System.out.println("Отправка запроса на получение списка заказов");
+
+        RequestSpecification request = given()
+                .baseUri(Config.BASE_URI)
+                .header("Content-type", "application/json");
+
+        // Добавляем только те параметры, которые не равны null
+        if (courierId != null) {
+            request.queryParam("courierId", courierId);
+        }
+        if (nearestStation != null) {
+            request.queryParam("nearestStation", nearestStation);
+        }
+        if (limit != null) {
+            request.queryParam("limit", limit);
+        }
+        if (page != null) {
+            request.queryParam("page", page);
+        }
+        return request
+                .when()
+                .get(Config.LIST_OF_ORDER_API);
+    }
+
+
 }

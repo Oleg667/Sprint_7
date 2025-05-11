@@ -1,7 +1,6 @@
 import config.Config;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
-//import org.junit.Assert;  // Для JUnit 4 оставляем статический импорт
 import static org.junit.Assert.*;
 import org.junit.Test;// импортируем Test
 import static steps.CourierSteps.*;  // или import steps.CounterSteps;
@@ -17,11 +16,10 @@ import org.junit.runners.MethodSorters;
 public class CourierLoggedTest {
 
     @Test
-    @DisplayName("#1 - Проверка авторизации курьера")
-    @Story("Успешная авторизация курьера с полными данными")
+    @DisplayName("#1 - Успешная авторизация курьера с полными данными")
     @Description("Проверка, что API возвращает статус 200, в теле ответа id:")
 
-    public void test1_Creating_Courier_Logged() {
+    public void test1_creating_Courier_Logged() {
 
         String login = generateUniqueLogin(); // Генерация уникального логина
 

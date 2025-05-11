@@ -7,9 +7,6 @@ import io.restassured.config.SSLConfig;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.http.ContentType;
 import config.Config;
-import org.junit.Assert;
-import java.util.HashMap;
-import java.util.Map;
 
 
 
@@ -20,8 +17,8 @@ public class CourierSteps {
         RestAssured.config = RestAssured.config()
                 .sslConfig(new SSLConfig().relaxedHTTPSValidation())
                 .httpClient(HttpClientConfig.httpClientConfig() //Получить конфигурацию для HttpClient
-                .setParam("http.connection.timeout", 5000) //сколько максимум ждать подключения к серверу
-                .setParam("http.socket.timeout", 5000) //сколько ждать ответа после подключения
+                .setParam("http.connection.timeout", Config.CONNECTION_TIMEOUT_MS) //сколько максимум ждать подключения к серверу
+                .setParam("http.socket.timeout", Config.SOCKET_TIMEOUT_MS) //сколько ждать ответа после подключения
                 );
     }
 
@@ -114,18 +111,6 @@ public class CourierSteps {
 
         System.out.println("Курьер с ID " + courierId + " успешно удалён");
     }
-
-//    // Метод проверки успешного создания курьера (201 статус).... перенес в тест проверку. ПОТОМ УДАЛИТЬ!!!!
-//    @Step("Проверка успешного создания курьера (код 201)")
-//    public static void verifyCreation(int statusCode, String responseBody) {
-//        System.out.println("Код ответа: " + statusCode);
-//        System.out.println("Тело ответа: " + responseBody);
-//
-//        if (statusCode != Config.STATUS_CODE_CREATED) {
-//            Assert.fail("Ошибка создания курьера. Код: " + statusCode + ", Ответ: " + responseBody);
-//        }
-//        System.out.println("Курьер успешно создан.");
-//    }
 
     // Метод очистки тестовых данных курьера
     @Step("Очистка тестовых данных, удаление курьера проверка  удаления")
