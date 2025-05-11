@@ -5,22 +5,30 @@
 Версия Java 11.
 
 Проект использует следующие библиотеки:
+
 JUnit 4
 RestAssured
 Allure
+
 Документация
+
 Ссылка на документацию учебного сервиса Яндекс.Самокат. https://qa-scooter.praktikum-services.ru/docs/#api-Orders-GetOrdersPageByPage
+
 Ссылка на учебное приложение Яндекс.Самокат. https://qa-scooter.praktikum-services.ru/
 
 Запуск автотестов
+
 Для запуска автотестов необходимо:
 
 Скачать код
 git clone https://github.com/Oleg667/Sprint_7
+
 Запустить команду в проекте
 mvn clean test
+
 Для создания отчета в Allure ввести команду
 mvn allure:report
+
 Структура проекта
 
 ├───src
