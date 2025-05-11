@@ -38,13 +38,13 @@ public class CreatingAnOrderTest {
             assertTrue("Ответ не содержит поле 'track'", responseBody.contains("\"track\""));
 
             // Извлекаем track из JSON
-            int track = loggedResponse.jsonPath().getInt("track");
+            int track = orderResponse.jsonPath().getInt("track");
 
-            // Проверяем, что id не пустое (считаем что 0 недопустим)
+            // Проверяем, что track не пустое (считаем что 0 недопустим)
             assertNotEquals(0, track); // Если 0 недопустим
 
             // проверяем код ответа на 201
-            assertEquals("Неверный статус код при авторизации курьера",
+            assertEquals("Неверный статус код при создании заказа",
                     Config.STATUS_CODE_CREATED,
                     statusCode);
         } finally {
