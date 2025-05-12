@@ -24,7 +24,7 @@ public class Config {
     public static final int STATUS_CODE_NOT_FOUND = 404;
 
     // Таймауты
-    public static final int CONNECTION_TIMEOUT_MS = 5000;
-    public static final int SOCKET_TIMEOUT_MS = 5000;
+    public static final int CONNECTION_TIMEOUT_MS = 70000;
+    public static final int SOCKET_TIMEOUT_MS = 70000;
 
 }

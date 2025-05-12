@@ -74,6 +74,27 @@ public class CourierLoggedTest {
         String json = "{"
                 + "\"login\": \"" + Config.DEFAULT_COURIER_LOGIN_PREFIX + "\""
                 + "}";
+
+            Response response = courierLoggedPartial(json);
+            assertEquals(
+                    "Ожидается статус 400 (Bad Reqest)",
+                    Config.STATUS_CODE_CLIENT_ERROR,
+                    response.getStatusCode());
+            assertEquals(
+                    "Недостаточно данных для входа",
+                    response.jsonPath().getString("message")
+            );
+
+        }
+    @Test
+    @DisplayName("#4 - Авторизация курьера с password = \"\" → 400")
+    @Description("Проверка, что API возвращает статус 400, Ответ: \"Недостаточно данных для входа\" ")
+    public void test4_loggedCourierWithoutPasswordEmpty_Return400() {
+        String json = "{"
+                + "\"login\": \"" + Config.DEFAULT_COURIER_LOGIN_PREFIX + "\","
+                + "\"password\": \"\""
+                + "}";
+
         Response response = courierLoggedPartial(json);
         assertEquals(
                 "Ожидается статус 400 (Bad Reqest)",
@@ -83,19 +104,16 @@ public class CourierLoggedTest {
                 "Недостаточно данных для входа",
                 response.jsonPath().getString("message")
         );
+
     }
 
     @Test
-    @DisplayName("#4 - Авторизация курьера с несуществующим логином")
+    @DisplayName("#5 - Авторизация курьера с несуществующим логином")
     @Description("Проверка, что API возвращает статус 404, Ответ: \"Учетная запись не найдена\" ")
-    public void test4_loggedCourierNonexistentLogin_ShouldReturn404() {
+    public void test5_loggedCourierNonexistentLogin_ShouldReturn404() {
 
         String login = generateUniqueLogin(); // Генерация уникального логина
         Response loggedResponse = courierLogged(login, Config.DEFAULT_PASSWORD); // Отправляем запрос на авторизацию
-
-        int statusCode = loggedResponse.getStatusCode();                    // Получаем код ответа и тело ответа
-        String responseBody = loggedResponse.getBody().asString();
-
         try {
             // Проверка тела ответа
             assertFalse("Тело ответа пустое", loggedResponse.getBody().asString().isEmpty());
@@ -111,16 +129,13 @@ public class CourierLoggedTest {
         }
     }
     @Test
-    @DisplayName("#5 - Авторизация курьера с неверным паролем")
+    @DisplayName("#6 - Авторизация курьера с неверным паролем")
     @Description("Проверка, что API возвращает статус 404, Ответ: \"Учетная запись не найдена\" ")
-    public void test5_loggedCourierNonexistentPassword_ShouldReturn404() {
+    public void test6_loggedCourierNonexistentPassword_ShouldReturn404() {
 
         String login = generateUniqueLogin(); // Генерация уникального логина
         Response createResponse = createCourier(login, Config.DEFAULT_PASSWORD, Config.DEFAULT_FIRST_NAME);// Отправляем запрос на создание курьера
         Response loggedResponse = courierLogged(login, Config.DEFAULT_PASSWORD+"xxx"); // Отправляем запрос на авторизацию
-
-        int statusCode = loggedResponse.getStatusCode();                    // Получаем код ответа и тело ответа
-        String responseBody = loggedResponse.getBody().asString();
 
         try {
             // Проверка тела ответа
